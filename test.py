@@ -7,21 +7,16 @@ dictionary = json.load(open('dictionary_compact.json'))
 
 #---------------------------------------------------------#
 # save list of words that are only five letters
-fiveLetterWords = []
-for word in dictionary:
-    if len(word) == 5:
-        fiveLetterWords.append(word)
-sortedDict = sorted(fiveLetterWords)
+def CreateDictionary(dictionary):
+    listOfWords = []
+    for word in dictionary:
+        if len(word) == 5:
+            listOfWords.append(word)
+    sortedDict = sorted(listOfWords)
+    return sortedDict
 #---------------------------------------------------------#
 
 #---------------------------------------------------------#
-# ask for user input
-lockedLetters = input('Enter locked letters: ')
-knownLetters = input('Enter known letters: ')
-eliminatedLetters = input('Enter eliminated letters: ')
-#---------------------------------------------------------#
-
-
 def CreateAnswers(sortedDict):
     #---------------------------------------------------------#
     goodGuesses = []
@@ -65,5 +60,17 @@ def CreateAnswers(sortedDict):
     print (goodGuesses)
 
     return goodGuesses
+#---------------------------------------------------------#
 
+#---------------------------------------------------------#
+# ask for user input
+lockedLetters = input('Enter locked letters: ')
+knownLetters = input('Enter known letters: ')
+eliminatedLetters = input('Enter eliminated letters: ')
+#---------------------------------------------------------#
+
+#---------------------------------------------------------#
+# run the code
+sortedDict = CreateDictionary(dictionary)
 testGuesses = CreateAnswers(sortedDict)
+#---------------------------------------------------------#
