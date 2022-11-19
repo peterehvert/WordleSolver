@@ -59,10 +59,14 @@ def ScoreAnswers(goodGuesses):
     scores = []
     for guess in goodGuesses:
         score = 0
-        for letter in guess:
+        for i in range(0,5):
             for otherGuess in goodGuesses:
-                if letter in otherGuess:
+                if guess[i] == otherGuess[i]:
+                    score += 2
+
+                elif guess[i] in otherGuess:
                     score += 1
+
         scores.append(score)
     return scores
 
@@ -86,5 +90,11 @@ guessDict = {}
 for guess, score in zip(possibleWords, scores):
     guessDict[guess] = score
 
-print (sorted(guessDict.items(), key=lambda kv: (kv[1], kv[0])))
+
+sortedGuesses =  sorted(guessDict.items(), key=lambda kv: (kv[1], kv[0]))
+
+for key, value in sortedGuesses:
+    print (key + ": " + str(value))
+
+
 #---------------------------------------------------------#
