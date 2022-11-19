@@ -8,15 +8,14 @@ dictionary = json.load(open('dictionary_compact.json'))
 #---------------------------------------------------------#
 # save list of words that are only five letters
 def CreateDictionary(dictionary):
+
     listOfWords = []
     for word in dictionary:
         if len(word) == 5:
             listOfWords.append(word)
     sortedDict = sorted(listOfWords)
     return sortedDict
-#---------------------------------------------------------#
 
-#---------------------------------------------------------#
 def CreateAnswers(sortedDict):
     #---------------------------------------------------------#
     goodGuesses = []
@@ -54,13 +53,21 @@ def CreateAnswers(sortedDict):
         if guess == 1:
             goodGuesses.append(word)
 
-
-    # this is a test commit
-
-    print (goodGuesses)
-
     return goodGuesses
+
+def ScoreAnswers(goodGuesses):
+    scores = []
+    for guess in goodGuesses:
+        score = 0
+        for letter in guess:
+            for otherGuess in goodGuesses:
+                if letter in otherGuess:
+                    score += 1
+        scores.append(score)
+    return scores
+
 #---------------------------------------------------------#
+
 
 #---------------------------------------------------------#
 # ask for user input
@@ -72,5 +79,12 @@ eliminatedLetters = input('Enter eliminated letters: ')
 #---------------------------------------------------------#
 # run the code
 sortedDict = CreateDictionary(dictionary)
-testGuesses = CreateAnswers(sortedDict)
+possibleWords = CreateAnswers(sortedDict)
+scores = ScoreAnswers(possibleWords)
+
+guessDict = {}
+for guess, score in zip(possibleWords, scores):
+    guessDict[guess] = score
+
+print (sorted(guessDict.items(), key=lambda kv: (kv[1], kv[0])))
 #---------------------------------------------------------#
